@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecordDAO implements RecordDAOInterface {
@@ -58,7 +59,28 @@ public class RecordDAO implements RecordDAOInterface {
 
 	@Override
 	public List<Record> list(int orderId) {
-		return null;
+		List<Record> list = new ArrayList<Record>();
+
+		try (Connection c = DBUtil.getConnection(); Statement s = c.createStatement()) {
+			String sql = "select * from records where orderId = " + orderId;
+			ResultSet rs = s.executeQuery(sql);
+			while(rs.next()) {
+				Record record = new Record();
+				record.setId(rs.getInt("id"));
+				record.setOrderId(rs.getInt("orderid"));
+				record.setUserId(rs.getString("userid"));
+				record.setTelNum(rs.getString("telnum"));
+				record.setOrderNum(rs.getInt("ordernum"));
+				record.setSelected(rs.getBoolean("selected"));
+
+				list.add(record);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return list;
 	}
 
 	@Override
