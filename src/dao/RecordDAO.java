@@ -12,7 +12,7 @@ import java.util.List;
 
 public class RecordDAO implements RecordDAOInterface {
     @Override
-    public Record add(Record record) {
+    public Record addRecord(Record record) {
 
         try (Connection c = DBUtil.getConnection(); Statement s = c.createStatement()) {
             String sql = "insert into records(orderid, userid, telnum, ordernum) values ("
@@ -49,8 +49,26 @@ public class RecordDAO implements RecordDAOInterface {
     }
 
     @Override
-    public Record getById(int id) {
-        return null;
+    public Record getRecordById(int id) {
+        Record record = new Record();
+
+        try (Connection c = DBUtil.getConnection(); Statement s = c.createStatement()) {
+            String sql = "select * from records where id = " + id;
+            ResultSet rs = s.executeQuery(sql);
+            if (rs.next()) {
+                record.setId(rs.getInt("id"));
+                record.setOrderId(rs.getInt("orderid"));
+                record.setUserId(rs.getString("userid"));
+                record.setTelNum(rs.getString("telnum"));
+                record.setOrderNum(rs.getInt("ordernum"));
+                record.setSelected(rs.getBoolean("selected"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return record;
     }
 
     @Override
