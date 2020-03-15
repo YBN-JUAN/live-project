@@ -45,11 +45,11 @@ public class InformationFrame extends JFrame {
         namePanel.setBackground(Color.WHITE);
         subPanel1.add(namePanel);
 
-        JLabel nameLabel = new JLabel(record.getUserName());
+        JLabel nameLabel = new JLabel("真实姓名");
         nameLabel.setFont(new Font("微软雅黑", Font.PLAIN, 22));
         namePanel.add(nameLabel);
 
-        JLabel name = new JLabel("name");
+        JLabel name = new JLabel(record.getUserName());
         namePanel.add(name);
 
         JPanel quantityPanel = new JPanel();
