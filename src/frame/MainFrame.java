@@ -82,6 +82,7 @@ public class MainFrame extends JFrame {
 		endButton.setBackground(SystemColor.activeCaption);
 		endButton.setFont(new Font("微软雅黑", Font.PLAIN, 22));
 		endButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
