@@ -52,4 +52,56 @@ public class OrderDAO implements OrderDAOInterface{
 		return order;
 	}
 	
+	@Override
+	public int getMaskNum(int id) {
+		// TODO Auto-generated method stub
+		int maskNum = 0;
+		
+		try (Connection c = DBUtil.getConnection(); Statement s = c.createStatement()) {
+            String sql = "select masknum from orders where id = " + id;
+            ResultSet rs = s.executeQuery(sql);
+            if (rs.next()) {
+                maskNum = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+        	e.printStackTrace();
+        	maskNum = -1;
+        }
+		
+        return maskNum;
+		
+	}
+
+	@Override
+	public boolean isOpening(int id) {
+		// TODO Auto-generated method stub
+		boolean opening = true;
+		
+		try (Connection c = DBUtil.getConnection(); Statement s = c.createStatement()) {
+            String sql = "select opening from orders where id = " + id;
+            ResultSet rs = s.executeQuery(sql);
+            if (rs.next()) {
+                opening = rs.getBoolean(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+		
+		return opening;
+	}
+
+	@Override
+	public boolean closeOrder(int id) {
+		// TODO Auto-generated method stub
+		try (Connection c = DBUtil.getConnection(); Statement s = c.createStatement()) {
+            String sql = "update orders set opening = false where id = " + id;
+            s.executeUpdate(sql);
+        } catch (SQLException e) {
+        	e.printStackTrace();
+            return false;
+        }
+		
+		return true;
+	}
+	
 }
