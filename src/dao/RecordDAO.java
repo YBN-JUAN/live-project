@@ -11,99 +11,107 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecordDAO implements RecordDAOInterface {
-	@Override
-	public Record add(Record record) {
+    @Override
+    public Record add(Record record) {
 
-		try (Connection c = DBUtil.getConnection(); Statement s = c.createStatement()) {
-			String sql = "insert into records(orderid, userid, telnum, ordernum) values ("
-				+ record.getOrderId() + ","
-				+ "\'" + record.getUserId() + "\',"
-				+ "\'" + record.getTelNum() + "\',"
-				+ record.getOrderNum() + ");";
-			s.executeUpdate(sql);
-			sql = "select * from records order by id desc";
-			ResultSet rs = s.executeQuery(sql);
-			if (rs.next()) {
-				record.setId(rs.getInt("id"));
-				record.setSelected(rs.getBoolean("selected"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
+        try (Connection c = DBUtil.getConnection(); Statement s = c.createStatement()) {
+            String sql = "insert into records(orderid, userid, telnum, ordernum) values ("
+                + record.getOrderId() + ","
+                + "\'" + record.getUserId() + "\',"
+                + "\'" + record.getTelNum() + "\',"
+                + record.getOrderNum() + ");";
+            s.executeUpdate(sql);
+            sql = "select * from records order by id desc";
+            ResultSet rs = s.executeQuery(sql);
+            if (rs.next()) {
+                record.setId(rs.getInt("id"));
+                record.setSelected(rs.getBoolean("selected"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
 
-		return record;
-	}
+        return record;
+    }
 
-	@Override
-	public boolean setSelectedTrue(int id) {
-		return false;
-	}
+    @Override
+    public boolean setSelectedTrue(int id) {
+        try (Connection c = DBUtil.getConnection(); Statement s = c.createStatement()) {
+            String sql = "update records set selected = true where id = " + id;
+            s.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
 
-	@Override
-	public Record getById(int id) {
-		return null;
-	}
+        return true;
+    }
 
-	@Override
-	public Record getByUserID(String userId, int orderId) {
-		return null;
-	}
+    @Override
+    public Record getById(int id) {
+        return null;
+    }
 
-	@Override
-	public Record getByTelNum(String telNum, int orderId) {
-		Record record = null;
+    @Override
+    public Record getByUserID(String userId, int orderId) {
+        return null;
+    }
 
-		try (Connection c = DBUtil.getConnection(); Statement s = c.createStatement()) {
-			String sql = "select * from records where "
-					+ "telNum = \'" + telNum + "\'"
-					+ " and orderid = " + orderId;
-			ResultSet rs = s.executeQuery(sql);
-			if (rs.next()) {
+    @Override
+    public Record getByTelNum(String telNum, int orderId) {
+        Record record = null;
+
+        try (Connection c = DBUtil.getConnection(); Statement s = c.createStatement()) {
+            String sql = "select * from records where "
+                + "telNum = \'" + telNum + "\'"
+                + " and orderid = " + orderId;
+            ResultSet rs = s.executeQuery(sql);
+            if (rs.next()) {
                 record = new Record();
-				record.setId(rs.getInt("id"));
-				record.setOrderId(rs.getInt("orderid"));
-				record.setUserId(rs.getString("userid"));
-				record.setTelNum(rs.getString("telnum"));
-				record.setOrderNum(rs.getInt("ordernum"));
-				record.setSelected(rs.getBoolean("selected"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
+                record.setId(rs.getInt("id"));
+                record.setOrderId(rs.getInt("orderid"));
+                record.setUserId(rs.getString("userid"));
+                record.setTelNum(rs.getString("telnum"));
+                record.setOrderNum(rs.getInt("ordernum"));
+                record.setSelected(rs.getBoolean("selected"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
 
-		return record;
-	}
+        return record;
+    }
 
-	@Override
-	public List<Record> list(int orderId) {
-		List<Record> list = new ArrayList<Record>();
+    @Override
+    public List<Record> list(int orderId) {
+        List<Record> list = new ArrayList<Record>();
 
-		try (Connection c = DBUtil.getConnection(); Statement s = c.createStatement()) {
-			String sql = "select * from records where orderId = " + orderId;
-			ResultSet rs = s.executeQuery(sql);
-			while(rs.next()) {
-				Record record = new Record();
-				record.setId(rs.getInt("id"));
-				record.setOrderId(rs.getInt("orderid"));
-				record.setUserId(rs.getString("userid"));
-				record.setTelNum(rs.getString("telnum"));
-				record.setOrderNum(rs.getInt("ordernum"));
-				record.setSelected(rs.getBoolean("selected"));
+        try (Connection c = DBUtil.getConnection(); Statement s = c.createStatement()) {
+            String sql = "select * from records where orderId = " + orderId;
+            ResultSet rs = s.executeQuery(sql);
+            while (rs.next()) {
+                Record record = new Record();
+                record.setId(rs.getInt("id"));
+                record.setOrderId(rs.getInt("orderid"));
+                record.setUserId(rs.getString("userid"));
+                record.setTelNum(rs.getString("telnum"));
+                record.setOrderNum(rs.getInt("ordernum"));
+                record.setSelected(rs.getBoolean("selected"));
 
-				list.add(record);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
+                list.add(record);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
 
-		return list;
-	}
+        return list;
+    }
 
-	@Override
-	public boolean ableOrder(int orderId, String userId, String telNum) {
-		return false;
-	}
+    @Override
+    public boolean ableOrder(int orderId, String userId, String telNum) {
+        return false;
+    }
 }
