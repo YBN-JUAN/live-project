@@ -27,7 +27,7 @@ public class LotteryServiceImpl implements LotteryService {
                 recordDao.setSelectedTrue(record.getId());
                 maskNum -= record.getOrderNum();
             } else {
-                break;
+                continue;
             }
         }
         orderDao.closeOrder(orderId);
