@@ -6,16 +6,17 @@ import pojo.Record;
 import service.RegisterService;
 
 public class RegisterServiceImpl implements RegisterService {
-    private RecordDAOInterface dao=new RecordDAO();
+
+    private RecordDAOInterface dao = new RecordDAO();
 
     @Override
     public boolean canRegister(String userId, String phoneNumber, int orderId) {
-        return dao.ableOrder(orderId,userId,phoneNumber);
+        return dao.ableOrder(orderId, userId, phoneNumber);
     }
 
     @Override
     public int Register(String userId, String phoneNumber, int orderId, int maskNum) {
-        Record record=new Record();
+        Record record = new Record();
         record.setUserId(userId);
         record.setTelNum(phoneNumber);
         record.setOrderId(orderId);

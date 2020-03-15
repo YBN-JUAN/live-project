@@ -8,13 +8,13 @@ import pojo.Order;
 import pojo.Record;
 import service.LotteryService;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class LotteryServiceImpl  implements LotteryService {
-    private OrderDAOInterface orderDao =new OrderDAO();
-    private RecordDAOInterface recordDao=new RecordDAO();
+public class LotteryServiceImpl implements LotteryService {
+    private OrderDAOInterface orderDao = new OrderDAO();
+    private RecordDAOInterface recordDao = new RecordDAO();
+
     @Override
     public void endOrder(int orderId) {
         Order order = orderDao.get(orderId);
@@ -22,11 +22,11 @@ public class LotteryServiceImpl  implements LotteryService {
 
         List<Record> records = recordDao.list(orderId);
         Collections.shuffle(records);
-        for(Record record:records){
-            if(maskNum>=record.getOrderNum()){
+        for (Record record : records) {
+            if (maskNum >= record.getOrderNum()) {
                 recordDao.setSelectedTrue(record.getId());
-                maskNum-=record.getOrderNum();
-            }else {
+                maskNum -= record.getOrderNum();
+            } else {
                 break;
             }
         }
