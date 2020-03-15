@@ -1,11 +1,12 @@
 package service.impl;
 
+import dao.RecordDAO;
 import dao.RecordDAOInterface;
 import pojo.Record;
 import service.RegisterService;
 
 public class RegisterServiceImpl implements RegisterService {
-    private RecordDAOInterface dao=null;
+    private RecordDAOInterface dao=new RecordDAO();
 
     @Override
     public boolean canRegister(String userId, String phoneNumber, int orderId) {
