@@ -10,6 +10,7 @@ public class MainFrame extends JFrame {
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					MainFrame frame = new MainFrame();
@@ -72,6 +73,7 @@ public class MainFrame extends JFrame {
 		buttonPanel1.add(beginButton);
 		beginButton.setFont(new Font("微软雅黑", Font.PLAIN, 22));
 		beginButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
