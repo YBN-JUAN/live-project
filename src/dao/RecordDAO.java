@@ -50,12 +50,13 @@ public class RecordDAO implements RecordDAOInterface {
 
     @Override
     public Record getRecordById(int id) {
-        Record record = new Record();
+        Record record = null;
 
         try (Connection c = DBUtil.getConnection(); Statement s = c.createStatement()) {
             String sql = "select * from records where id = " + id;
             ResultSet rs = s.executeQuery(sql);
             if (rs.next()) {
+                record = new Record();
                 record.setId(rs.getInt("id"));
                 record.setOrderId(rs.getInt("orderid"));
                 record.setUserId(rs.getString("userid"));
@@ -73,7 +74,28 @@ public class RecordDAO implements RecordDAOInterface {
 
     @Override
     public Record getByUserID(String userId, int orderId) {
-        return null;
+        Record record = null;
+
+        try (Connection c = DBUtil.getConnection(); Statement s = c.createStatement()) {
+            String sql = "select * from records where "
+                    + "userid = \'" + userId + "\'"
+                    + " and orderid = " + orderId;
+            ResultSet rs = s.executeQuery(sql);
+            if (rs.next()) {
+                record = new Record();
+                record.setId(rs.getInt("id"));
+                record.setOrderId(rs.getInt("orderid"));
+                record.setUserId(rs.getString("userid"));
+                record.setTelNum(rs.getString("telnum"));
+                record.setOrderNum(rs.getInt("ordernum"));
+                record.setSelected(rs.getBoolean("selected"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return record;
     }
 
     @Override
@@ -130,6 +152,29 @@ public class RecordDAO implements RecordDAOInterface {
 
     @Override
     public boolean ableOrder(int orderId, String userId, String telNum) {
+        boolean isExisted = (getByUserID(userId, orderId) != null || getByTelNum(telNum, orderId) != null);
+
+        if (isExisted) return false;
+
+        try (Connection c = DBUtil.getConnection(); Statement s = c.createStatement()) {
+            String sql = "select orderid from records where selected = true"
+                    + " and (userId = \'" + userId + "\'"
+                    + " or telNum = \'" + telNum + "\')"
+                    + " order by orderid desc";
+            ResultSet rs = s.executeQuery(sql);
+            if (rs.next()) {
+                int maxId = rs.getInt(1);
+                if (orderId - maxId >= 3)
+                    return true;
+                else
+                    return false;
+            }
+            else return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return false;
     }
 }
