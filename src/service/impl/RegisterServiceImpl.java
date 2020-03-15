@@ -21,6 +21,6 @@ public class RegisterServiceImpl implements RegisterService {
         record.setTelNum(phoneNumber);
         record.setOrderId(orderId);
         record.setOrderNum(maskNum);
-        return dao.addRecord(record).getId();
+        return dao.add(record).getId();
     }
 }
