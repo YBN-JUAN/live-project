@@ -1,7 +1,12 @@
 package dao;
 
 import pojo.Record;
+import util.DBUtil;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 public class RecordDAO implements RecordDAOInterface {
@@ -27,7 +32,28 @@ public class RecordDAO implements RecordDAOInterface {
 
 	@Override
 	public Record getByTelNum(String telNum, int orderId) {
-		return null;
+		Record record = null;
+
+		try (Connection c = DBUtil.getConnection(); Statement s = c.createStatement()) {
+			String sql = "select * from records where "
+					+ "telNum = \'" + telNum + "\'"
+					+ " and orderid = " + orderId;
+			ResultSet rs = s.executeQuery(sql);
+			if (rs.next()) {
+                record = new Record();
+				record.setId(rs.getInt("id"));
+				record.setOrderId(rs.getInt("orderid"));
+				record.setUserId(rs.getString("userid"));
+				record.setTelNum(rs.getString("telnum"));
+				record.setOrderNum(rs.getInt("ordernum"));
+				record.setSelected(rs.getBoolean("selected"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return record;
 	}
 
 	@Override
