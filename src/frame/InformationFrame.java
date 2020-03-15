@@ -1,5 +1,7 @@
 package frame;
 
+import pojo.Record;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;

@@ -10,6 +10,6 @@ public class FindServiceImpl implements FindService {
 
     @Override
     public Record getRecord(int id) {
-        return recordDAO.getRecordById(id);
+        return recordDAO.getById(id);
     }
 }

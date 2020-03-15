@@ -1,5 +1,12 @@
 package frame;
 
+import service.FindService;
+import service.LotteryService;
+import service.RegisterService;
+import service.impl.FindServiceImpl;
+import service.impl.LotteryServiceImpl;
+import service.impl.RegisterServiceImpl;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -8,11 +15,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame {
+	private FindService findService=new FindServiceImpl();
+	private LotteryService lotteryService=new LotteryServiceImpl();
+	private RegisterService registerService=new RegisterServiceImpl();
+	private int orderId;
+
 	public String name;
 	public String identity;
 	public String phone;
 	public int quantity;
 	private JPanel contentPane;
+	JButton beginButton;
+	JButton endButton;
 
 	/**
 	 * 初始化
@@ -60,27 +74,44 @@ public class MainFrame extends JFrame {
 		RerservationPanel.add(buttonPanel1);
 		buttonPanel1.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 5));
 
-		JButton beginButton = new JButton("开始预约");
+		beginButton = new JButton("开始预约");
 		beginButton.setHorizontalAlignment(SwingConstants.LEFT);
 		buttonPanel1.add(beginButton);
 		beginButton.setFont(new Font("微软雅黑", Font.PLAIN, 22));
 		beginButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if("".equals(maskTextField.getText())) {
+				String mask=maskTextField.getText();
+				if(mask==null || mask.length()<1) {
 					JOptionPane.showMessageDialog(contentPane, "请输入口罩总数！", "提示",JOptionPane.WARNING_MESSAGE);  
+				}else {
+					try{
+						int maskNum=Integer.parseInt(mask);
+						if(maskNum<0) {
+							throw new NumberFormatException();
+						}
+						orderId=lotteryService.startOder(maskNum);
+						beginButton.setEnabled(false);
+						endButton.setEnabled(true);
+					}catch (NumberFormatException ex){
+						JOptionPane.showMessageDialog(contentPane, "请输入正整数！", "提示",JOptionPane.WARNING_MESSAGE);
+					}
 				}
 			}
 		});
 		beginButton.setBackground(SystemColor.activeCaption);
 
-		JButton endButton = new JButton("结束预约");
+		endButton = new JButton("结束预约");
+		endButton.setEnabled(false);
 		buttonPanel1.add(endButton);
 		endButton.setBackground(SystemColor.activeCaption);
 		endButton.setFont(new Font("微软雅黑", Font.PLAIN, 22));
 		endButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				lotteryService.endOrder(orderId);
+				beginButton.setEnabled(true);
+				endButton.setEnabled(false);
 			}
 		});
 
@@ -253,7 +284,7 @@ public class MainFrame extends JFrame {
 					JOptionPane.showMessageDialog(contentPane, "请输入预约编号！", "提示",JOptionPane.WARNING_MESSAGE);  
 				}
 				else {
-					InformationFrame infoFrame = new InformationFrame();
+					InformationFrame infoFrame = new InformationFrame(null);
 					infoFrame.setVisible(true);
 				}
 			}
