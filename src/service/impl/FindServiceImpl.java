@@ -6,7 +6,8 @@ import pojo.Record;
 import service.FindService;
 
 public class FindServiceImpl implements FindService {
-    private RecordDAOInterface recordDAO=new RecordDAO();
+    private RecordDAOInterface recordDAO = new RecordDAO();
+
     @Override
     public Record getRecord(int id) {
         return recordDAO.getRecordById(id);
