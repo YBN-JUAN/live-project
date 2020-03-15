@@ -21,6 +21,8 @@ FOREIGN KEY(orderid) REFERENCES orders(id)
 	ON UPDATE CASCADE
     ON DELETE CASCADE,
 
+username varchar(255) not null, /*真实姓名*/
+
 userid varchar(20) not null, /*身份证号*/
 
 telnum varchar(20) not null, /*手机号*/
