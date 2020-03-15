@@ -94,7 +94,7 @@ public class MainFrame extends JFrame {
 						beginButton.setEnabled(false);
 						endButton.setEnabled(true);
 					}catch (NumberFormatException ex){
-						JOptionPane.showMessageDialog(contentPane, "请输入正整数！", "提示",JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(contentPane, "口罩数目必须是正整数！", "提示",JOptionPane.WARNING_MESSAGE);
 					}
 				}
 			}
@@ -230,10 +230,36 @@ public class MainFrame extends JFrame {
 		submitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if("".equals(nameTextField.getText()) || "".equals(identityTextField.getText()) ||
-					"".equals(phoneTextField.getText()) || "".equals(quantityTextField.getSelectedItem())) {
-					JOptionPane.showMessageDialog(contentPane, "请填写完整信息！", "提示",JOptionPane.WARNING_MESSAGE);  
+				if(beginButton.isEnabled()){
+					JOptionPane.showMessageDialog(contentPane, "请先开启预约！", "提示",JOptionPane.WARNING_MESSAGE);
 				}
+				String name=nameTextField.getText();
+				String uid=identityTextField.getText();
+				String telNum=phoneTextField.getText();
+				String mask=quantityTextField.getSelectedItem().toString();
+
+				if("".equals(name) || "".equals(uid) || "".equals(telNum) || "".equals(mask)){
+					JOptionPane.showMessageDialog(contentPane, "请填写完整信息！", "提示",JOptionPane.WARNING_MESSAGE);
+				}else {
+					try{
+						int maskNum=Integer.parseInt(mask);
+						if(maskNum<0) {
+							throw new NumberFormatException();
+						}
+						if(registerService.canRegister(uid, telNum, orderId))
+						{
+							int recordId = registerService.Register(uid, telNum,name, orderId, maskNum);
+							JOptionPane.showMessageDialog(contentPane, "你的预约编号为："+recordId, "预约成功",JOptionPane.WARNING_MESSAGE);
+						}else {
+							JOptionPane.showMessageDialog(contentPane, "身份证或手机号已被使用或"
+								+"手机号或者身份证号在此前三次预约中成功中签","预约失败",JOptionPane.WARNING_MESSAGE);
+						}
+					}catch (NumberFormatException ex){
+						JOptionPane.showMessageDialog(contentPane, "口罩数目必须是正整数！", "提示",JOptionPane.WARNING_MESSAGE);
+					}
+				}
+
+
 			}
 		});
 
@@ -291,6 +317,8 @@ public class MainFrame extends JFrame {
 		});
 
 	}
+
+
 
 	public static void main(String[] args) {
 		MainFrame frame = new MainFrame();

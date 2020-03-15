@@ -15,12 +15,13 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
-    public int Register(String userId, String phoneNumber, int orderId, int maskNum) {
+    public int Register(String userId, String phoneNumber,String name, int orderId, int maskNum) {
         Record record = new Record();
         record.setUserId(userId);
         record.setTelNum(phoneNumber);
         record.setOrderId(orderId);
         record.setOrderNum(maskNum);
+        record.setUserName(name);
         return dao.add(record).getId();
     }
 }
