@@ -67,6 +67,9 @@ public class MainFrame extends JFrame {
 		beginButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if("".equals(maskTextField.getText())) {
+					JOptionPane.showMessageDialog(contentPane, "请输入口罩总数！", "提示",JOptionPane.WARNING_MESSAGE);  
+				}
 			}
 		});
 		beginButton.setBackground(SystemColor.activeCaption);
@@ -196,6 +199,10 @@ public class MainFrame extends JFrame {
 		submitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				if("".equals(nameTextField.getText()) || "".equals(identityTextField.getText()) ||
+					"".equals(phoneTextField.getText()) || "".equals(quantityTextField.getSelectedItem())) {
+					JOptionPane.showMessageDialog(contentPane, "请填写完整信息！", "提示",JOptionPane.WARNING_MESSAGE);  
+				}
 			}
 		});
 
@@ -242,8 +249,13 @@ public class MainFrame extends JFrame {
 		searchButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				InformationFrame infoFrame = new InformationFrame();
-				infoFrame.setVisible(true);
+				if("".equals(idTextField.getText())) {
+					JOptionPane.showMessageDialog(contentPane, "请输入预约编号！", "提示",JOptionPane.WARNING_MESSAGE);  
+				}
+				else {
+					InformationFrame infoFrame = new InformationFrame();
+					infoFrame.setVisible(true);
+				}
 			}
 		});
 

@@ -5,7 +5,7 @@ import pojo.Record;
 import java.util.List;
 
 public interface RecordDAOInterface {
-	Record addRecord(Record record);
+    Record addRecord(Record record);
 
 	boolean setSelectedTrue(int id);
 
