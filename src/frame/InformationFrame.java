@@ -24,7 +24,7 @@ public class InformationFrame extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
-        JLabel idLabel = new JLabel("中签成功！您的预约编号：" + record.getOrderId());
+        JLabel idLabel = new JLabel("成功中签！您的预约编号：" + record.getId());
         idLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         idLabel.setHorizontalAlignment(SwingConstants.CENTER);
         idLabel.setFont(new Font("幼圆", Font.BOLD, 22));
