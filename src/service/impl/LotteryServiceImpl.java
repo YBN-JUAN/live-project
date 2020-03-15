@@ -32,4 +32,10 @@ public class LotteryServiceImpl implements LotteryService {
         }
         orderDao.closeOrder(orderId);
     }
+
+    @Override
+    public int startOder(int maskNum) {
+        Order order = orderDao.add(maskNum);
+        return order.getId();
+    }
 }
