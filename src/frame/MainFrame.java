@@ -7,19 +7,14 @@ import java.awt.event.*;
 
 public class MainFrame extends JFrame {
 	private JPanel contentPane;
-
+	public String name;
+	public String identity;
+	public String phone;
+	public int quantity;
+	
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					MainFrame frame = new MainFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		MainFrame frame = new MainFrame();
+		frame.setVisible(true);
 	}
 
 	/**
@@ -126,7 +121,7 @@ public class MainFrame extends JFrame {
 		JTextField nameTextField = new JTextField();
 		namePanel.add(nameTextField);
 		nameTextField.setFont(new Font("微软雅黑", Font.PLAIN, 22));
-		nameTextField.setColumns(20);
+		nameTextField.setColumns(10);
 		
 		//预约数量
 		JPanel quantityPanel = new JPanel();
@@ -142,11 +137,9 @@ public class MainFrame extends JFrame {
 		quantityLabel.setFont(new Font("微软雅黑", Font.PLAIN, 22));
 		
 		JComboBox quantityTextField = new JComboBox();
-		quantityTextField.setEditable(true);
 		quantityTextField.setMaximumRowCount(5);
 		quantityPanel.add(quantityTextField);
-		quantityTextField.setModel(new DefaultComboBoxModel(new String[] 
-				{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}));
+		quantityTextField.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3"}));
 		quantityTextField.setSelectedIndex(2);
 		quantityTextField.setFont(new Font("微软雅黑", Font.PLAIN, 22));
 		quantityTextField.setBackground(Color.WHITE);
@@ -172,7 +165,7 @@ public class MainFrame extends JFrame {
 		JTextField identityTextField = new JTextField();
 		identityPanel.add(identityTextField);
 		identityTextField.setFont(new Font("微软雅黑", Font.PLAIN, 22));
-		identityTextField.setColumns(20);
+		identityTextField.setColumns(10);
 		
 		//手机号码
 		JPanel phonePanel = new JPanel();
@@ -190,7 +183,7 @@ public class MainFrame extends JFrame {
 		JTextField phoneTextField = new JTextField();
 		phonePanel.add(phoneTextField);
 		phoneTextField.setFont(new Font("微软雅黑", Font.PLAIN, 22));
-		phoneTextField.setColumns(20);
+		phoneTextField.setColumns(10);
 		
 		//提交按钮
 		JPanel buttonPanel2 = new JPanel();
@@ -202,6 +195,12 @@ public class MainFrame extends JFrame {
 		submitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		submitButton.setFont(new Font("微软雅黑", Font.PLAIN, 22));
 		submitButton.setBackground(SystemColor.activeCaption);
+		
+		submitButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		
 		/**
 		 * 中签查询版块
@@ -231,7 +230,7 @@ public class MainFrame extends JFrame {
 		idTextField.setColumns(20);
 		idTextField.setFont(new Font("微软雅黑", Font.PLAIN, 22));
 		
-		//按钮
+		//查询按钮
 		JPanel buttonPanel3 = new JPanel();
 		buttonPanel3.setBackground(Color.WHITE);
 		SearchPanel.add(buttonPanel3);
@@ -242,6 +241,14 @@ public class MainFrame extends JFrame {
 		searchButton.setAlignmentY(Component.TOP_ALIGNMENT);
 		searchButton.setFont(new Font("微软雅黑", Font.PLAIN, 22));
 		searchButton.setBackground(SystemColor.activeCaption);
+		
+		searchButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				InformationFrame infoFrame = new InformationFrame();
+				infoFrame.setVisible(true);
+			}
+		});
 		
 	}
 }
