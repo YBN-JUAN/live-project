@@ -7,8 +7,9 @@ import java.awt.*;
 
 public class InformationFrame extends JFrame {
     private JPanel contentPane;
+    private Record record;
 
-    public InformationFrame() {
+    public InformationFrame(Record record) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 700, 300);
         contentPane = new JPanel();
@@ -19,7 +20,7 @@ public class InformationFrame extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
-        JLabel idLabel = new JLabel("中签成功！您的预约编号：");
+        JLabel idLabel = new JLabel("中签成功！您的预约编号：" + record.getOrderId());
         idLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         idLabel.setHorizontalAlignment(SwingConstants.CENTER);
         idLabel.setFont(new Font("幼圆", Font.BOLD, 22));
@@ -44,7 +45,7 @@ public class InformationFrame extends JFrame {
         nameLabel.setFont(new Font("微软雅黑", Font.PLAIN, 22));
         namePanel.add(nameLabel);
 
-        JLabel name = new JLabel("New label");
+        JLabel name = new JLabel("name");
         namePanel.add(name);
 
         JPanel quantityPanel = new JPanel();
@@ -55,7 +56,7 @@ public class InformationFrame extends JFrame {
         quantityLabel.setFont(new Font("微软雅黑", Font.PLAIN, 22));
         quantityPanel.add(quantityLabel);
 
-        JLabel orderNum = new JLabel("num");
+        JLabel orderNum = new JLabel(Integer.toString(record.getOrderNum()));
         quantityPanel.add(orderNum);
 
         JPanel subPanel2 = new JPanel();
@@ -71,7 +72,7 @@ public class InformationFrame extends JFrame {
         identityLabel.setFont(new Font("微软雅黑", Font.PLAIN, 22));
         identityPanel.add(identityLabel);
 
-        JLabel userId = new JLabel("id");
+        JLabel userId = new JLabel(record.getUserId());
         identityPanel.add(userId);
 
         JPanel phonePanel = new JPanel();
@@ -82,7 +83,7 @@ public class InformationFrame extends JFrame {
         phoneLabel.setFont(new Font("微软雅黑", Font.PLAIN, 22));
         phonePanel.add(phoneLabel);
 
-        JLabel Telnum = new JLabel("telNum");
+        JLabel Telnum = new JLabel(record.getTelNum());
         phonePanel.add(Telnum);
 
         JPanel buttonPanel = new JPanel();
