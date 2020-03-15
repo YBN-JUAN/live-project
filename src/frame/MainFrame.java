@@ -1,5 +1,6 @@
 package frame;
 
+import pojo.Record;
 import service.FindService;
 import service.LotteryService;
 import service.RegisterService;
@@ -306,12 +307,23 @@ public class MainFrame extends JFrame {
 		searchButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if("".equals(idTextField.getText())) {
+				String uOrderId=idTextField.getText();
+				if("".equals(uOrderId)) {
 					JOptionPane.showMessageDialog(contentPane, "请输入预约编号！", "提示",JOptionPane.WARNING_MESSAGE);  
 				}
 				else {
-					InformationFrame infoFrame = new InformationFrame(null);
-					infoFrame.setVisible(true);
+					try{
+						int oId=Integer.parseInt(uOrderId);
+						Record record = findService.getRecord(oId);
+						if(record!=null && record.isSelected()){
+							InformationFrame info=new InformationFrame(record);
+							info.setVisible(true);
+						} else {
+							JOptionPane.showMessageDialog(contentPane, "你没有中签或记录不存在", "提示",JOptionPane.WARNING_MESSAGE);
+						}
+					}catch (NumberFormatException ex){
+						JOptionPane.showMessageDialog(contentPane, "预约编号必须是正整数！", "提示",JOptionPane.WARNING_MESSAGE);
+					}
 				}
 			}
 		});

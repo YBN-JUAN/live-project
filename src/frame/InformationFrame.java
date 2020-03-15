@@ -6,6 +6,8 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class InformationFrame extends JFrame {
     private JPanel contentPane;
@@ -43,7 +45,7 @@ public class InformationFrame extends JFrame {
         namePanel.setBackground(Color.WHITE);
         subPanel1.add(namePanel);
 
-        JLabel nameLabel = new JLabel("真实姓名");
+        JLabel nameLabel = new JLabel(record.getUserName());
         nameLabel.setFont(new Font("微软雅黑", Font.PLAIN, 22));
         namePanel.add(nameLabel);
 
@@ -92,9 +94,15 @@ public class InformationFrame extends JFrame {
         contentPane.add(buttonPanel);
         buttonPanel.setBackground(Color.WHITE);
 
-        JButton confirmButton = new JButton("确认");
-        confirmButton.setFont(new Font("微软雅黑", Font.PLAIN, 22));
-        confirmButton.setBackground(SystemColor.activeCaption);
-        buttonPanel.add(confirmButton);
+//        JButton confirmButton = new JButton("确认");
+//        confirmButton.setFont(new Font("微软雅黑", Font.PLAIN, 22));
+//        confirmButton.setBackground(SystemColor.activeCaption);
+//        confirmButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//            }
+//        });
+//        buttonPanel.add(confirmButton);
     }
 }
