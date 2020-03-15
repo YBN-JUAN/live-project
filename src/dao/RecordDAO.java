@@ -13,7 +13,26 @@ import java.util.List;
 public class RecordDAO implements RecordDAOInterface {
 	@Override
 	public Record add(Record record) {
-		return null;
+
+		try (Connection c = DBUtil.getConnection(); Statement s = c.createStatement()) {
+			String sql = "insert into records(orderid, userid, telnum, ordernum) values ("
+				+ record.getOrderId() + ","
+				+ "\'" + record.getUserId() + "\',"
+				+ "\'" + record.getTelNum() + "\',"
+				+ record.getOrderNum() + ");";
+			s.executeUpdate(sql);
+			sql = "select * from records order by id desc";
+			ResultSet rs = s.executeQuery(sql);
+			if (rs.next()) {
+				record.setId(rs.getInt("id"));
+				record.setSelected(rs.getBoolean("selected"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return record;
 	}
 
 	@Override
