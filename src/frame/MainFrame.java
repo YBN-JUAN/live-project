@@ -317,12 +317,13 @@ public class MainFrame extends JFrame {
 						Record record = findService.getRecord(oId);
 						if(record!=null && record.isSelected()){
 							InformationFrame info=new InformationFrame(record);
+							info.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 							info.setVisible(true);
 						} else {
 							JOptionPane.showMessageDialog(contentPane, "你没有中签或记录不存在", "提示",JOptionPane.WARNING_MESSAGE);
 						}
 					}catch (NumberFormatException ex){
-						JOptionPane.showMessageDialog(contentPane, "预约编号必须是正整数！", "提示",JOptionPane.WARNING_MESSAGE);
+						JOptionPane.showMessageDialog(contentPane, "预约编号必须是整数！", "提示",JOptionPane.WARNING_MESSAGE);
 					}
 				}
 			}
